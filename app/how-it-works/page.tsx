@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -11,31 +12,43 @@ const steps = [
     title: "Register",
     description:
       "Fill out a simple online form with your child's information and choose a program that fits your schedule.",
+    image:
+      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop",
+    alt: "Person filling out a form on a clipboard",
   },
   {
     number: "2",
     title: "Get Matched",
     description:
       "We'll place your child in an age-appropriate group with trained facilitators and confirm your spot within 48 hours.",
+    image:
+      "https://images.unsplash.com/photo-1577896851231-70ef18881571?w=400&h=300&fit=crop",
+    alt: "Adult guiding children in an activity",
   },
   {
     number: "3",
     title: "Show Up & Have Fun",
     description:
       "Attend sessions at a convenient community location. All materials and snacks are provided free of charge.",
+    image:
+      "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=400&h=300&fit=crop",
+    alt: "Children playing sports outdoors",
   },
   {
     number: "4",
     title: "Grow Together",
     description:
       "Watch your child build confidence, learn healthy habits, and make friends. Families receive take-home resources after every session.",
+    image:
+      "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&h=300&fit=crop",
+    alt: "Kids stretching and exercising together",
   },
 ];
 
 export default function HowItWorksPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-blue-50 to-white py-20">
+      <section className="bg-gradient-to-br from-blue-50 to-white py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="text-4xl font-extrabold text-slate-900">
             How It Works
@@ -48,24 +61,39 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="py-16">
-        <div className="mx-auto max-w-3xl px-4">
-          <div className="space-y-10">
-            {steps.map((step) => (
-              <div key={step.number} className="flex gap-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
-                  {step.number}
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="space-y-14">
+            {steps.map((step, i) => (
+              <div
+                key={step.number}
+                className={`grid items-center gap-8 lg:grid-cols-2 ${i % 2 === 1 ? "lg:direction-rtl" : ""}`}
+              >
+                <div className={i % 2 === 1 ? "lg:order-2" : ""}>
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
+                      {step.number}
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-800">
+                      {step.title}
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-slate-600">{step.description}</p>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-slate-600">{step.description}</p>
+                <div
+                  className={`relative mx-auto aspect-[4/3] w-full max-w-sm overflow-hidden rounded-2xl shadow-lg ${i % 2 === 1 ? "lg:order-1" : ""}`}
+                >
+                  <Image
+                    src={step.image}
+                    alt={step.alt}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 rounded-xl border border-slate-200 bg-blue-50 p-8 text-center">
+          <div className="mt-16 rounded-xl border border-slate-200 bg-blue-50 p-8 text-center">
             <h3 className="text-xl font-bold text-slate-800">
               Programs Are Always Free
             </h3>
