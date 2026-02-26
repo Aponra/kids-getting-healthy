@@ -42,18 +42,33 @@ export default function RegisterPage() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("loading");
     setErrors({});
 
     const fd = new FormData(e.currentTarget);
     const body = {
-      parentName: fd.get("parentName"),
-      email: fd.get("email"),
-      phone: fd.get("phone"),
-      childName: fd.get("childName"),
-      childAge: fd.get("childAge"),
-      program: fd.get("program"),
+      parentName: (fd.get("parentName") as string)?.trim(),
+      email: (fd.get("email") as string)?.trim(),
+      phone: (fd.get("phone") as string)?.trim(),
+      childName: (fd.get("childName") as string)?.trim(),
+      childAge: (fd.get("childAge") as string)?.trim(),
+      program: (fd.get("program") as string)?.trim(),
     };
+
+    const fieldErrors: Record<string, string> = {};
+    if (!body.parentName) fieldErrors.parentName = "Parent name is required.";
+    if (!body.email) fieldErrors.email = "Email is required.";
+    if (!body.phone) fieldErrors.phone = "Phone number is required.";
+    if (!body.childName) fieldErrors.childName = "Child's name is required.";
+    if (!body.childAge) fieldErrors.childAge = "Child's age is required.";
+    if (!body.program) fieldErrors.program = "Please select a program.";
+
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
 
     try {
       const res = await fetch("/api/register", {
