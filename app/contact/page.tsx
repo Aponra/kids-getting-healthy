@@ -34,16 +34,29 @@ export default function ContactPage() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("loading");
     setErrors({});
 
     const fd = new FormData(e.currentTarget);
     const body = {
-      name: fd.get("name"),
-      email: fd.get("email"),
-      subject: fd.get("subject"),
-      message: fd.get("message"),
+      name: (fd.get("name") as string)?.trim(),
+      email: (fd.get("email") as string)?.trim(),
+      subject: (fd.get("subject") as string)?.trim(),
+      message: (fd.get("message") as string)?.trim(),
     };
+
+    const fieldErrors: Record<string, string> = {};
+    if (!body.name) fieldErrors.name = "Name is required.";
+    if (!body.email) fieldErrors.email = "Email is required.";
+    if (!body.subject) fieldErrors.subject = "Subject is required.";
+    if (!body.message) fieldErrors.message = "Message is required.";
+
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
 
     try {
       const res = await fetch("/api/contact", {
