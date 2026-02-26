@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
-import { adminDb } from "@/lib/firebase-admin";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const schema = z.object({
   parentName: z.string().min(1, "Parent name is required"),
@@ -16,7 +17,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = schema.parse(body);
 
-    await adminDb.collection("registrations").add({
+    await addDoc(collection(db, "registrations"), {
       ...data,
       createdAt: new Date().toISOString(),
     });

@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -11,7 +13,13 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    schema.parse(body);
+    const data = schema.parse(body);
+
+    await addDoc(collection(db, "contacts"), {
+      ...data,
+      createdAt: new Date().toISOString(),
+    });
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
