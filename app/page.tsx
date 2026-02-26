@@ -1,65 +1,120 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-blue-50 to-white py-24">
+        <div className="mx-auto max-w-5xl px-4 text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            Helping Kids Build{" "}
+            <span className="text-blue-600">Healthy Habits</span> for Life
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
+            Kids Getting Healthy is a nonprofit dedicated to empowering children
+            and families with the tools, knowledge, and community support they
+            need to live active, nourished lives.
           </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/register"
+              className="rounded-full bg-blue-600 px-8 py-3 text-sm font-semibold text-white shadow transition hover:bg-blue-700"
+            >
+              Register Your Child
+            </Link>
+            <Link
+              href="/donate"
+              className="rounded-full border-2 border-red-500 px-8 py-3 text-sm font-semibold text-red-500 transition hover:bg-red-50"
+            >
+              Make a Donation
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Mission snapshot */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-center text-2xl font-bold text-slate-800">
+            What We Do
+          </h2>
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {[
+              {
+                title: "Nutrition Education",
+                desc: "Age-appropriate workshops that teach kids about balanced eating, cooking basics, and making smart food choices.",
+              },
+              {
+                title: "Active Play Programs",
+                desc: "Fun, inclusive sports and movement sessions designed to get children excited about staying active every day.",
+              },
+              {
+                title: "Family Wellness Events",
+                desc: "Community gatherings that bring families together around healthy cooking demos, fitness challenges, and more.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-lg font-semibold text-blue-600">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm text-slate-500">{card.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Impact numbers */}
+      <section className="bg-blue-50 py-16">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="grid gap-8 text-center sm:grid-cols-3">
+            {[
+              { stat: "2,500+", label: "Kids Served" },
+              { stat: "120+", label: "Events Hosted" },
+              { stat: "35", label: "Community Partners" },
+            ].map((item) => (
+              <div key={item.label}>
+                <p className="text-3xl font-extrabold text-blue-600">
+                  {item.stat}
+                </p>
+                <p className="mt-1 text-sm font-medium text-slate-600">
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <h2 className="text-2xl font-bold text-slate-800">
+            Ready to Get Involved?
+          </h2>
+          <p className="mt-4 text-slate-600">
+            Whether you want to register your child, volunteer at an event, or
+            support our mission with a donation, there&apos;s a place for you.
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/how-it-works"
+              className="rounded-full bg-blue-600 px-8 py-3 text-sm font-semibold text-white shadow transition hover:bg-blue-700"
+            >
+              Learn How It Works
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full border-2 border-slate-300 px-8 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
