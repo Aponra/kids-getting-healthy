@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
+import { adminDb } from "@/lib/firebase-admin";
 
 const schema = z.object({
   parentName: z.string().min(1, "Parent name is required"),
@@ -13,7 +14,13 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    schema.parse(body);
+    const data = schema.parse(body);
+
+    await adminDb.collection("registrations").add({
+      ...data,
+      createdAt: new Date().toISOString(),
+    });
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
